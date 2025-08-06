@@ -1,0 +1,52 @@
+﻿@page
+@model RazorMessageWall.Pages.MessageWallModel
+@{
+    ViewData["Title"] = "Message Wall";
+}
+
+<h1>Message Wall</h1>
+
+@*Form allows to you to easily post information back to your page
+    A form is a spcific type of htm lsection -send information back to wev server
+    State - idea is that asp.net core razor pages by default does not have state -stateless web app 
+    Meaning it does not remembery your information between calls. so every time you call a server
+    it is doing everything over again just like the firs time
+
+    -used to be with .net framework web forms.
+    - has a concept of state, remember between calls all information about you
+    - problem - some app store 3-4-5mb of data between calls. 5mb per person ex. etc. will be slower tthem ore people access it.
+    - crumble , fail trying to maintain all session information
+    - idea is you want to scale web app, maybe you want 2 dif web server hosting your site and having load balancing idea
+     where if you come to a website you maybe running on server A  or server b and you can have twice the volume because you have 
+     twice computing power but problem is when you do that, and you are remembering state you have to keep the person in 1 server,
+     you can't moved them somwhere else halfway through otherwise their statee wold not be with them, or atleast not easily.
+    - state can be abused and be a bad thing, tho i t can be used well
+    - razor pages supports the ability to be a stateful or remember sTATE web app
+    - default as stateless
+
+    - server side development, all the work gets done on the server, c# foeach done one server, and one happen is it builds a straight up
+    html page and send it down in the client.
+
+    - c# is safe. 
+
+    -js is a client side language, meaning i oyu want to work with js, rendered by js, viewable by browser.
+    - server side aps.netcorevv,c razor pages. can get partenered with clien side languages like js, even a tool like blazor (c# in client side)
+    -- persidsted and access/
+*@
+<form method="post">
+   <div class="form-group">
+        @for (int i = 0; i < Model.Messages.Count; i++)
+        {
+             <input type="hidden" asp-for="Messages[i]"/>
+        }
+       <input asp-for="Message" type="text" placeholder="Type your message" />
+       <button type="submit" class="btn btn-primary">Submit</button>
+   </div>
+</form>
+
+
+<h2>These are the messages: </h2> 
+@foreach (var item in Model.Messages)
+{
+    <h3>@item</h3>
+}
